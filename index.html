@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title></title>
+        <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <style type="text/css">
+
+        *{
+            font-family: 'Zawgyi-One'!important;   
+        }
+
+        </style>
+        <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+        <script src="cordova.js"></script>
+        <script src="js/app.js"></script>
+    </head>
+    <body ng-app="survey" ng-controller="HomeController">
+
+    <script id="popup.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-calm">
+          <h1 class="title" ng-bind-html="modaltitle"></h1>
+          <button class="button button-clear button-primary  ion-close-circled" ng-click="modal.hide()"></button>
+        </ion-header-bar>
+        <ion-content class="padding">
+          <div class="list" ng-if="!about">
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">အေၾကာင္းအရာ</span>
+                  <textarea placeholder="အေၾကာင္းအရာ" name="reason" ng-model="survey.reason"></textarea>
+                </label>
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">အမည္</span>
+                  <input type="text" placeholder="အမည္" name="name" ng-model="survey.name">
+                </label>
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">ဖုန္းနံပါတ္</span>
+                  <input type="text" placeholder="ဖုန္းနံပါတ္" name="phone" ng-model="survey.phone">
+                </label>
+            <button class="button button-full button-balanced" ng-disabled="!survey.reason" ng-click="saveConfirm()" ng-if="survey.correct">Confirm</button>
+            <button class="button button-full button-assertive" ng-disabled="!survey.reason" ng-click="saveConfirm()" ng-if="!survey.correct">Confirm</button>
+          </div>
+          <div class="list" ng-if="about" ng-bind-html="modaldescription">
+          </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+
+    <ion-pane>
+      <ion-header-bar class="bar-calm">
+        <h1 class="title">Pro Survey</h1>
+        <button class="button button-clear icon-right ion-person" ng-click="aboutus()"></button>
+      </ion-header-bar>
+      <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">            
+        </ion-refresher>
+
+        <div ng-if="survey.questions" ng-repeat="quest in survey.questions">
+            <div class="list card">
+               <div class="item item-divider text-center" ng-bind-html="quest.title">
+               </div>
+               <div class="padding" ng-bind-html="quest.questions"></div>
+            </div>
+            <div class="button-bar padding">
+                  <a class="button button-balanced ion-checkmark-round" ng-click="yesRight(quest.id);">
+                    မွန္
+                  </a>
+                  <a class="button button-assertive ion-close-round" ng-click="noWrong(quest.id);">
+                    မွား
+                  </a>
+            </div>
+        </div>
+
+        <div ng-if="survey.questions && survey.questions.length == 0" class="list card">
+              <div class="padding text-center">You have been already answered all survey..<br>Stay Tune!!  </div>
+        </div>
+
+        <div ng-if="!survey.questions && nointernet" class="list card">
+              <div class="padding text-center">There is no internet connection...<br>Please try pull to refresh again !!!</div>
+        </div>
+
+    <ion-infinite-scroll on-infinite="loadMore()" ng-if="moreDataCanBeLoaded()" distance="10%">
+    </ion-infinite-scroll>
+
+      </ion-content>
+      <ion-footer-bar class="bar-calm">
+        <h1 class="title" style="font-size: 12px;text-align: center"> Copyright &copy 2016 <a href="http://www.proxsoftwaresolution.com" target="_blank" style="text-decoration: none"><b>Pro-X Software Solution</b> </a></h1>
+      </ion-footer-bar>
+
+    </ion-pane>
+  </body>
+</html>

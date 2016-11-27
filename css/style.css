@@ -1,0 +1,9 @@
+/* Empty. Add your own CSS if you like */
+@font-face{
+  font-family:"Zawgyi-One";
+  src:local("Zawgyi-One"),url('fonts/ionic/fonts/zawgyione.eot');
+  src:local("Zawgyi-One"),url('fonts/ionic/fonts/zawgyione.eot#iefix') format("embedded-opentype"),
+  url('fonts/ionic/fonts/zawgyione.woff') format("woff"),
+  url('fonts/ionic/fonts/zawgyione.ttf') format("truetype"),
+  url('fonts/ionic/fonts/zawgyione.svg#zawgyi-oneregular') format("svg");
+}
